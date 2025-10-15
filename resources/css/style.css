@@ -1,0 +1,150 @@
+
+/* Variabel CSS untuk aksen futuristik */
+:root {
+  --ring-1: rgba(110, 231, 255, 0.25);
+  --ring-2: rgba(196, 181, 253, 0.20);
+  --card: rgba(255, 255, 255, 0.04);
+  --card-strong: rgba(255, 255, 255, 0.06);
+  --border: rgba(168, 255, 223, 0.18);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Garis grid lembut di background */
+.grid-bg {
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(255, 0, 0, 0.06) 1px, transparent 0),
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.03) 1px, transparent 0);
+  background-size: 24px 24px, 80px 80px;
+  background-position: 0 0, 0 0;
+}
+
+/* Gradient ring dekoratif */
+.ring-gradient {
+  position: absolute;
+  inset: -1px;
+  border-radius: 1.25rem;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--ring-1), transparent 35%, var(--ring-2));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+
+/* gradient moving hero section */
+.gradient-text {
+  background: linear-gradient(90deg, #00f0ff, #a200ff, #00ffa3);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 6s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Card base dengan glassmorphism */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow, 0 10px 30px rgba(0, 0, 0, 0.25));
+}
+
+/* Hover halus untuk kartu */
+.card-hover {
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .35);
+  border-color: rgba(110, 231, 255, .28);
+}
+
+/* Tombol utama futuristik */
+.btn-primary {
+  position: relative;
+}
+
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(110, 231, 255, .35), rgba(196, 181, 253, .25));
+  z-index: -1;
+  filter: blur(6px);
+  opacity: .55;
+  transition: opacity .2s ease;
+}
+
+.btn-primary:hover::after {
+  opacity: .85;
+}
+
+
+/* efek kursor */
+.cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1; /* agar di belakang */
+  opacity: 1;
+  mix-blend-mode: lighten;
+  will-change: transform, opacity;
+  background: radial-gradient(circle,
+      rgba(255, 0, 255, 0.9) 0%,
+      rgba(180, 0, 255, 0.8) 70%,
+      rgba(255, 0, 200, 0.7) 100%);
+  box-shadow:
+    0 0 30px rgba(255, 0, 255, 0.6),
+    0 0 60px rgba(180, 0, 255, 0.5),
+    0 0 100px rgba(255, 0, 200, 0.4);
+  animation: pulse 2s infinite ease-in-out;
+  filter: blur(20px);
+}
+
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+
+
+/* Sembunyikan di layar kecil / touch */
+@media (max-width: 768px),
+(pointer: coarse) {
+  .cursor-ring {
+    display: none;
+  }
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ring {
+    display: none;
+  }
+}
