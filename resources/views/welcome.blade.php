@@ -284,12 +284,17 @@
             animation: spin 6s linear infinite;
         }
 
-        /* Soft glow for bar */
+        /* Soft gradient bar + glow */
+        #loadingBar {
+            background: linear-gradient(90deg, #7dd0ff, #dba8ff, #90ffc4);
+        }
+
+        /* Soft glow effect */
         .shadow-neon-soft {
             box-shadow: 0 0 6px #7dd0ff, 0 0 12px #dba8ff, 0 0 16px #90ffc4;
         }
 
-        /* Soft glow for text */
+        /* Soft glowing text */
         .glow-text-soft {
             text-shadow: 0 0 3px #7dd0ff, 0 0 6px #dba8ff, 0 0 10px #90ffc4;
         }
@@ -301,18 +306,15 @@
 
     <!-- Preloader -->
     <div id="preloader" class="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center">
-        <!-- Neon Loading Bar Container -->
         <div class="w-64 h-3 bg-white/10 rounded-full overflow-hidden relative">
-            <!-- Gradient bar -->
-            <div id="loadingBar"
-                class="h-3 w-0 rounded-full bg-gradient-to-r from-[#00f0ff] via-[#a200ff] to-[#00ffa3] shadow-neon">
-            </div>
-            <!-- Glowing moving “snail head” -->
+            <!-- Soft Gradient Bar -->
+            <div id="loadingBar" class="h-3 w-0 rounded-full shadow-neon-soft"></div>
+            <!-- Glowing moving head -->
             <div id="glowHead"
-                class="absolute top-0 h-3 w-8 rounded-full bg-gradient-to-r from-[#00f0ff] via-[#a200ff] to-[#00ffa3] blur-xl">
+                class="absolute top-0 h-3 w-8 rounded-full bg-gradient-to-r from-[#7dd0ff] via-[#dba8ff] to-[#90ffc4] blur-xl">
             </div>
         </div>
-        <p class="mt-4 text-white/70 tracking-widest text-sm font-mono gradient-text">LOADING...</p>
+        <p class="mt-4 text-white/70 tracking-widest text-sm font-mono glow-text-soft">LOADING...</p>
     </div>
 
     <div id="cursorRing" class="cursor-ring" aria-hidden="true"></div>
@@ -1216,10 +1218,10 @@
             const preloader = document.getElementById('preloader');
             const loadingBar = document.getElementById('loadingBar');
             const glowHead = document.getElementById('glowHead');
-            const duration = 3.5;
+            const duration = 2.5;
 
-            // Cek localStorage, kalau pernah load, hide preloader langsung
-            if (localStorage.getItem('preloaderShown')) {
+            // Cek sessionStorage
+            if (sessionStorage.getItem('preloaderShown')) {
                 preloader.style.display = 'none';
                 return;
             }
@@ -1227,6 +1229,7 @@
             // Tampilkan preloader
             preloader.style.display = 'flex';
 
+            // Animasi GSAP
             gsap.to(loadingBar, {
                 width: '100%',
                 duration: duration,
@@ -1239,21 +1242,19 @@
                 ease: 'power2.inOut'
             });
 
-            // Fade out preloader dan simpan state di localStorage
+            // Fade out preloader + simpan state di sessionStorage
             gsap.delayedCall(duration, () => {
                 gsap.to(preloader, {
                     opacity: 0,
                     duration: 0.5,
                     onComplete: () => {
                         preloader.style.display = 'none';
-                        localStorage.setItem('preloaderShown', 'true');
+                        sessionStorage.setItem('preloaderShown', 'true');
                     }
                 });
             });
         });
     </script>
-
-
 
 
     <script src="script.js"></script>
